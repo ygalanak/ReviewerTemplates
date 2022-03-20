@@ -1,22 +1,13 @@
-![GitHub last commit](https://img.shields.io/github/last-commit/ygalanak/DataAnalysisTemplate)
+![GitHub last commit](https://img.shields.io/github/last-commit/ygalanak/ReviewerTemplates)
 
-# Data Analysis Template: A reproducibility universe
+# Peer Reviewer Templates
 
-This template is based on [Andrew Heiss'](https://www.andrewheiss.com/) [Global-Pandoc-Files](https://github.com/andrewheiss/Global-Pandoc-files) and [Portable Pandoc Magic](https://github.com/andrewheiss/portable-pandoc-magic) to convert Markdown-based documents into Word (docx through odt), HTML, and PDF (through xelatex).
+This template helps to act a reviewer in a peer-reviewed journal. You can create in `R` Markdown the cover letter to the Editor and the reviewer report. The templates are based on [Yannis Galanakis' Data Analysis Template](https://github.com/ygalanak/DataAnalysisTemplate). From these templates, you may export your `.Rmd` file into `.tex`, hence `.pdf`, or `.docx`. An `.html` option would be available but not used for peer-reviewing activities.
 
-![DataAnalaysisTemplate](template_all.jpg)
 
 ## Project management
 - [:file\_folder: tex_out](/tex_out): LaTeX support files 
 - [:file\_folder: pandoc](/pandoc): (1) portable pandoc filters, (2) templates, (3) necessary fonts and (4) ad hoc scripts 
-- [:file\_folder: scripts](/scripts): R scripts of the analysis - they are called in the preamble of the `rmd-paper.Rmd`. 
-- [:file\_folder: sections](/sections): include all other (external) `.md` files necessary for the paper (e.g. `/sections/introduction.md` or `sections/conclusion.md`).
-
-
-## Log of changes (relative to Andrew's portable version)
-1. Added `pandoc-crossref.exe` in the project folder.
-2. `pandoc/templates/xelatex.tex` and `pandoc/templates/xelatex-manuscript.tex` replace font `IncosoloataGo` with `Incosolata`.
-3. Github repo includes `tex_out/rmd-paper.pdf`, but not any other supporting output files from `.tex`.
 
 ## Contents
 
@@ -61,16 +52,9 @@ If done STEP 1 before, no need to repeat. Note that if you haven't installed the
     ```text
     .
     ├── Makefile
-    ├── manuscript.Rmd
+    ├── report.Rmd
+    ├── CoverLetter.Rmd
     ├── references.bib
-    ├── sections
-        ├── introduction.md
-        ├── conclusions.md
-    ├── data
-        ├── derived
-        ├── manual
-        ├── raw
-    ├── scripts
     └── pandoc
         ├── bin
         ├── csl
