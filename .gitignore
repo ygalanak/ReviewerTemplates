@@ -1,0 +1,31 @@
+# R stuff
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# cache
+cache/
+missfont.log
+
+# Output
+md-paper-manuscript.docx
+md-paper-manuscript.tex
+md-paper.docx
+md-paper.html
+md-paper.tex
+rmd-paper-manuscript.docx
+rmd-paper-manuscript.tex
+rmd-paper.docx
+rmd-paper.aux
+rmd-paper.bbl
+rmd-paper.bcf
+rmd-paper.blg
+rmd-paper.fdb_latexmk
+rmd-paper.fls
+rmd-paper.log
+rmd-paper.out
+rmd-paper.run.xml
+rmd-paper.xdv
+
+
