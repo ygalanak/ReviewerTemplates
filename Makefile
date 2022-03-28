@@ -45,7 +45,7 @@
 # ----------------------
 # Main document (either .md or .Rmd)
 # SRC = md-paper.md
-SRC = rmd-paper.Rmd
+SRC = coverletter.Rmd
 
 # Bibliography file
 BIB_FILE = references.bib
@@ -58,7 +58,7 @@ ENDFLOAT = FALSE
 ANONYMIZED = FALSE
 
 # Add version control information in footer (only happens in tex target)
-VC_ENABLE = TRUE
+VC_ENABLE = FALSE
 
 # Output folder for LaTeX PDFs (uses a separate folder so all the intermediate
 # TeX stuff doesn't clutter up your main directory)
@@ -217,7 +217,7 @@ bib:	$(BIB)
 		$(CROSSREF) \
 		--default-image-extension=pdf \
 		--pdf-engine=xelatex \
-		--template=$(PREFIX)/templates/xelatex.tex \
+		--template=$(PREFIX)/templates/xelatex-coverletter.tex \
 		--biblatex \
 		-V $(TEX_REF) \
 		--bibliography=$(BIB_FILE) \
