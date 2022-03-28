@@ -1,62 +1,175 @@
-%!TEX program = xelatex 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Academic Letter LaTeX and RMarkdown Structure                       %
+% Author: Pedro Henrique Pereira Braga     
+% Modified by: Yannis Galanakis
+%                                                                     %
+% License:                                                            %
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/) %
+%                                                                     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\documentclass[$size$]{letter}
-\usepackage[letterpaper,margin=1in]{geometry}
+% Set the font size (11pt, for now) and paper size (e.g. letterpaper, a4paper)
+\documentclass[11pt, letterpaper]{letter} 
 
-\usepackage{fixltx2e}
+%----------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------
 
-% Adds microtypography features: character protrusion, for XeTeX.
-\usepackage{microtype}
-\usepackage{graphicx}
+\usepackage{graphicx} % Required for including pictures
+\usepackage{fancyhdr} % Allows the use of fancy headers and footers
+\usepackage{tikz}
 
-% Allows links.
-\usepackage[usenames,dvipsnames]{color}
-\usepackage[xetex, bookmarks, colorlinks, breaklinks]{hyperref}
-\hypersetup{colorlinks=true, urlcolor=NavyBlue, linkcolor=NavyBlue}
+\usepackage{microtype} % For typography improvement
 
-\urlstyle{rm}
+\usepackage{url} % Allows the use of hyperlinks
+\urlstyle{same} % Allows hyperlink fonts to be the same as the mainfont
+\usepackage[hidelinks]{hyperref} % Allows the use of hyperlinks and 
+% removes the blue boxes around the link
+$if(colorlinks)$
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+$endif$
 
-\frenchspacing{}        % Remove extra spaces after periods.
-\pagestyle{empty}       % Remove page numbers.
+\pagestyle{empty} % Removes headers and footers
 
-\usepackage{fontspec}
-\defaultfontfeatures{Mapping=tex-text}  % Sets quotation marks.
-\setmainfont{Source Sans Pro}
-\setsansfont{Open Sans}
-%\setmonofont[Scale=MatchLowercase]{Incosolata}
+\usepackage{setspace} % Allows the use of double spacing in the letter body
 
-% From default template
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setlength\parindent{1cm} % Paragraph indentation
 
-\newcommand\shyp{\-}
+% Create a new command for the horizontal rule in the document which allows 
+% thickness specification
+\makeatletter
+  \def\@texttop{} % force the address to start above
+\renewcommand*{\opening}[1]{\ifx\@empty\fromaddress
+  \thispagestyle{firstpage}%
+    {\raggedleft\@date\par}%
+  \else  % home address
+    \thispagestyle{empty}%
+    {\raggedleft\begin{tabular}{l@{}}\ignorespaces
+      \fromaddress \\*[2\parskip]%
+      \@date \end{tabular}\par}%
+  \fi
+  %\vspace{2\parskip}%                        <-- Removed
+  %{\raggedright \toname \\ \toaddress \par}% <-- Removed
+  %\vspace{2\parskip}%                        <-- Removed
+  #1\par\nobreak}
+\let\ps@empty\ps@plain
+\let\ps@firstpage\ps@plain
+\makeatother
 
-\newcommand{\header}[9]{
-  {\hypersetup{hidelinks}
-    \noindent
-  \hfill
-      \parbox[b][0.625in][t]{2in}{
-        \setlength{\baselineskip}{9pt}
-        \fontsize{7pt}{7pt}{
-          \fontspec{Open Sans}
-          \textbf{#8}\\
-            {#9}\vspace{6pt}\\
-              #1\\
-              #2, #3 #4\\
-              Phone: #5\\
-                Fax: #6\\
-                Email: \href{mailto:#7}{#7}
-                }
-            }
-          }}
-\renewcommand{\opening}[1]{\raggedright 
+%--------------------------------------------------------------------------
+%	FONTS
+%--------------------------------------------------------------------------
+
+\usepackage[T1]{fontenc} % Output font encoding for international characters
+\usepackage[utf8]{inputenc} % Required for inputting international characters
+\usepackage[quiet]{fontspec} % Allows the use of fontspec
+\usepackage{txfonts} % Allows the use of Lato fonts
+
+% Selecting Google's Lato font-family, as it is free to use
+
+% Bold and italic were not working, so I defined them for the main font
+% manually as follows:
+
+\defaultfontfeatures{Mapping=tex-text}
+\setmainfont[Mapping=tex-text, Color=textcolor]{Source Sans Pro}
+\newfontfamily\bodyfont[]{Source Sans Pro}
+\newfontfamily\thinfont[]{Source Sans Pro ExtraLight}
+
+%----------------------------------------------------------------------------
+%	DOCUMENT MARGINS
+%----------------------------------------------------------------------------
+
+\usepackage{geometry} % Required for adjusting page dimensions
+
+\geometry{
+    headheight = 0.1in, % Header height
+	top=1in, % Top margin
+	bottom=1.5cm, % Bottom margin
+	left=3cm, % Left margin
+	right=3cm, % Right margin
+	% showframe, % Uncomment to show how the type block is set on the page
+}
+
+%-----------------------------------------------------------------------------
+%	AUTHOR AND RECIPIENTS NEW COMMANDS AND DETAILS STRUCTURE
+%-----------------------------------------------------------------------------
+
+\newcommand{\authordetails}[1]{\renewcommand{\authordetails}{#1}}
+\newcommand{\recipientdetails}[1]{\renewcommand{\recipientdetails}{#1}}
+
+%-----------------------------------------------------------------------------
+%	HEADER STRUCTURE
+%-----------------------------------------------------------------------------
+
+\address{
+ % Include the author's details on the right side of the page under the line
+	\raggedleft{
+		\footnotesize{ % Use a smaller font size
+		$author$\\ % Author name
+		\authordetails\\
+       \hspace{1mm}
+       }
+	}
+  \vspace{-0.05\textheight} % Move the date and letter content up
+}
+
+%------------------------------------------------------------------------------
+%	COMPOSE THE ENTIRE HEADER
+%------------------------------------------------------------------------------
+
+\renewcommand{\opening}[1]{
+	{\fromaddress
+    \vspace{0.05\textheight}\\ % Print the sender's address here and add some whitespace to allow the printing of the date
+    \raggedleft{$date$} % Include the date, aligned to the right
+    \par % par
+    }
+	{\raggedright 
     \toname\\ 
     \toaddress 
     \par} % Print the recipient's name and adress
 	\vspace{0.25cm} % White vertical space after recipient's address
 	\noindent #1 % Following this, insert the opening info
 }
-      %------------------------------------------------------------------------------
+
+%------------------------------------------------------------------------------
+%	SIGNATURE STRUCTURE
+%------------------------------------------------------------------------------
+% The signature is a combination of the author's name, title and institution
+\signature{$author$, $from_professional_title$\\
+           $from_institution$} 
+
+% I will later combine the option of inserting a signature within it
+% No indentation for paragraphs
+\setlength\parindent{0pt}
+
+\renewcommand{\closing}[1]{
+	\vspace{2.5mm} % Some whitespace after the letter content and before the signature
+	\noindent % Stop paragraph indentation
+%	\hspace*{\longindentation} % Move the signature right to the value of \longindentation
+	\parbox{\indentedwidth}{
+		\raggedright
+		#1 % Print the signature text
+		\vskip .5in % Whitespace between the closing text and author's name for a physical signature
+		\vspace{-0.2in}\includegraphics[height=0.5in]{signature.pdf}\\
+		\fromsig % Prints the value of \signature{}, i.e. author name and title
+	}
+}
+
+%-------------------------------------------------------------------------------
+%	AUTHOR'S INFORMATION
+%-------------------------------------------------------------------------------
+
+\authordetails{
+    $from_position$\\
+	\thinfont{$from_department$\\ % Sender's department/institution
+    $from_institution$\\
+    $from_address$\\ % Sender's address
+	$from_city$, $from_state_province$\\ % Sender's city, state or province,
+    $from_postalcode$\\ % postal code
+    $from_country$}
+}
+
+%------------------------------------------------------------------------------
 %	RECIPIENT'S INFORMATION
 %------------------------------------------------------------------------------
 
@@ -81,52 +194,258 @@ $to_country$
 $endif$}
     $if(subject)$
     \\~\\
-\bodyfont{Subject: $subject$}
+\bodyfont{\textbf{\underline{Subject: $subject$}}}
 $endif$
 }
-      
-      $if(draft)$
-        \usepackage{draftwatermark}
-      \SetWatermarkLightness{0.9}
-      $endif$
-        
-        \begin{document}
-      
-      \header{$head.address$}{$head.city$}{$head.state$}{$head.zip$}{$head.phone$}{$head.fax$}{$head.email$}{$sig.name$}{$head.dept$}
- {\recipientdetails}     
-    \opening{}  
-      \vspace{0.5in}
-      
-      $body$
-        
-        $if(sig.include)$
-        \begin{minipage}[t]{6.5in}
-      Sincerely,\\
-      
-      \vspace{0.1in}
-      
-      $if(sig.sign)$
-      \vspace{-0.2in}
-        \includegraphics[height=.5in]{./cover_letter/signature.pdf}
-      $else$
-        \\
-      $endif$
-        \\
-      $sig.name$\\
-      $sig.post$
-        $if(sig.secondpost)$
-        \\
-      $sig.secondpost$
-        $endif$
-        \end{minipage}
-      $endif$
-        
-        $if(cc)$
-        cc: $for(cc)$$cc$$sep$, $endfor$
-        $endif$
-        
-        $if(ps)$
-        $ps$
-        $endif$
-        
-        \end{document}
+
+%------------------------------------------------------------------------------
+%	HEADER CONTENTS
+%------------------------------------------------------------------------------
+
+% \fancypagestyle{firstpage}{
+%     \fancyhf{}
+%         \fancyhead[L]{
+%          %   \includegraphics[height=0.6in, keepaspectratio=true]{$from_institution_logo$}
+%             }
+%         \fancyhead[R]{$author$\\
+%             \footnotesize{
+%               $from_email$\\ % Sender's email address
+%               $from_personal_website$ \\ % Sender's URL
+%               $from_phone$ % Sender's phone number
+%               }
+%             }
+%         }
+% 
+% \fancypagestyle{plain}{
+%     \fancyhf{}
+%         \fancyhead[L]{
+%       %      \includegraphics[height=0.6in, keepaspectratio=true]{$from_institution_logo$}
+%             }
+%         \fancyhead[R]{$author$\\
+%             \footnotesize{
+%               $from_email$\\ % Sender's email address
+%               $from_personal_website$ \\ % Sender's URL
+%               $from_phone$ % Sender's phone number
+%               }
+%             }
+%         }
+% 
+% \fancypagestyle{empty}{
+%     \fancyhf{}
+%         \fancyhead[L]{
+%             \includegraphics[height=0.6in, keepaspectratio=true]{$from_institution_logo$}
+%             }
+%         \fancyhead[R]{$author$\\
+%             \footnotesize{
+%               $from_email$\\ % Sender's email address
+%               $from_personal_website$ \\ % Sender's URL
+%               $from_phone$ % Sender's phone number
+%               }
+%             }
+%         }
+
+$if(blockquote)$
+\usepackage{mdframed} % color is loaded by mdframed
+\definecolor{greyborder}{RGB}{221,221,221}
+%\definecolor{greytext}{RGB}{119,119,119}
+\newmdenv[rightline=false,bottomline=false,topline=false,linewidth=3pt,linecolor=greyborder,skipabove=\parskip]{blockquote}
+\renewenvironment{quote}{\begin{blockquote}\list{}{\rightmargin=0em\leftmargin=0em}%
+\item\relax\color{\thinfont}\ignorespaces}{\unskip\unskip\endlist\end{blockquote}}
+$endif$
+
+%==============================================================================
+% FOLDING MARKS
+%==============================================================================
+
+\makeatletter
+  \def\loadfoldmarkdims#1{%
+    \begingroup
+      \let\LetterOptionNeedsPapersize\@gobbletwo
+      \def\setkomavar{\@ifstar{\@gobbletwo}{\@gobbletwo}}%
+      \def\scr@compatibility##1\relax{0>0\relax}%
+      \def\@alignfrom{0}%
+      \let\KOMAoptions\@gobble
+      \let\newkomavar\@gobble
+      \let\l@addto@macro\@gobbletwo
+      \let\addtoreffields\@gobble
+      \let\setkomafont\@gobbletwo
+      \newcommand*{\@newplength}[1]{%
+        \@ifundefined{ltr@len@##1}{%
+          \expandafter\let\csname notscr@len@##1\endcsname=\z@%
+        }{}%
+      }%
+      \newcommand*{\useplength}[1]{%
+        \glueexpr \csname notscr@len@##1\endcsname\relax}%
+      \newcommand*{\setlengthtoplength}[3][]{%
+        \setlength{##2}{\useplength{##3}}%
+        \setlength{##2}{##1##2}}
+      \newcommand*{\@setplength}[3][]{%
+        \begingroup%
+          \setlength{\@tempskipa}{\glueexpr ##3\relax}%
+          \setlength{\@tempskipa}{##1\@tempskipa}%
+          \edef\@tempa{\endgroup\def\expandafter\noexpand\csname notscr@len@##2\endcsname{\the\@tempskipa}}%
+        \@tempa
+      }%
+      \newcommand*{\addtolengthplength}[3][]{%
+        \begingroup%
+          \setlengthtoplength[{##1}]{\@tempskipa}{##3}%
+          \edef\@tempa{\endgroup\noexpand\addtolength{##2}{\the\@tempskipa}}%
+        \@tempa%
+      }%
+      \newcommand*{\@addtoplength}[3][]{%
+        \begingroup%
+          \setlength{\@tempskipa}{\glueexpr ##3\relax}%
+          \setlength{\@tempskipa}{##1\@tempskipa}%
+          \addtolengthplength{\@tempskipa}{##2}%
+          \edef\@tempa{\endgroup\def\expandafter\noexpand\csname ltr@len@##2\endcsname{\the\@tempskipa}}%
+        \@tempa%
+      }%
+      \@newplength{foldmarkhpos}%
+      \@newplength{foldmarkvpos}%
+      \@newplength{tfoldmarkvpos}%
+      \@newplength{mfoldmarkvpos}%
+      \@newplength{bfoldmarkvpos}%
+      \@newplength{lfoldmarkhpos}%
+      \@newplength{pfoldmarklength}%
+      \@newplength{tfoldmarklength}%
+      \@newplength{mfoldmarklength}%
+      \@newplength{bfoldmarklength}%
+      \@newplength{lfoldmarklength}%
+      \@newplength{foldmarkthickness}%
+      \@setplength{foldmarkthickness}{.2pt}%
+      \input{#1.lco}%
+      \def\@makeglobal##1{%
+        \global\expandafter\let\csname @##1\expandafter\endcsname\csname notscr@len@##1\endcsname
+      }%
+      \@makeglobal{foldmarkhpos}%
+      \@makeglobal{foldmarkvpos}%
+      \@makeglobal{tfoldmarkvpos}%
+      \@makeglobal{mfoldmarkvpos}%
+      \@makeglobal{bfoldmarkvpos}%
+      \@makeglobal{lfoldmarkhpos}%
+      \@makeglobal{pfoldmarklength}%
+      \@makeglobal{tfoldmarklength}%
+      \@makeglobal{mfoldmarklength}%
+      \@makeglobal{bfoldmarklength}%
+      \@makeglobal{lfoldmarklength}%
+      \@makeglobal{foldmarkthickness}%
+    \endgroup
+  }
+  \loadfoldmarkdims{DIN}
+
+  \def\foldmarkdim#1#2{%
+    \csname @#1foldmark#2\endcsname
+  }
+  \def\setfoldmarkdim#1#2#3{%
+    \expandafter\def\csname @#1foldmark#2\endcsname{#3}%
+  }
+
+  \def\@new@foldmarkif#1{%
+    \expandafter\newif\csname if@#1foldmark\endcsname
+    \csname @#1foldmarktrue\endcsname
+  }
+  \@new@foldmarkif{p}
+  \@new@foldmarkif{t}
+  \@new@foldmarkif{m}
+  \@new@foldmarkif{b}
+  \@new@foldmarkif{l}
+  \def\foldmarkifenabled#1{%
+    \csname if@#1foldmark\endcsname
+      \expandafter\@firstoftwo
+    \else
+      \expandafter\@secondoftwo
+    \fi
+  }
+  \def\foldmarkenable#1{%
+    \csname @#1foldmarktrue\endcsname
+  }
+  \def\foldmarkdisable#1{%
+    \csname @#1foldmarkfalse\endcsname
+  }
+
+  \def\@patch@foldmarkdims{%
+    \ifdim \foldmarkdim{p}{length}=\z@
+      \setfoldmarkdim{p}{length}{4mm}%
+    \fi
+    \ifdim \foldmarkdim{t}{length}=\z@
+      \setfoldmarkdim{t}{length}{2mm}%
+    \fi
+    \ifdim \foldmarkdim{m}{length}=\z@
+      \setfoldmarkdim{m}{length}{2mm}%
+    \fi
+    \ifdim \foldmarkdim{b}{length}=\z@
+      \setfoldmarkdim{b}{length}{2mm}%
+    \fi
+    \ifdim \foldmarkdim{l}{length}=\z@
+      \setfoldmarkdim{l}{length}{4mm}%
+    \fi
+    \setfoldmarkdim{p}{vpos}{.5\paperheight}%
+  }
+
+  \newcommand\drawfoldmarks{%
+    \begingroup
+      \@patch@foldmarkdims
+      \begin{tikzpicture}[overlay, remember picture, line width=\foldmarkdim{}{thickness}]
+        \foreach \mark in {p, t, m, b} {
+          \foldmarkifenabled{\mark}{
+            \ifdim \foldmarkdim{\mark}{vpos}=\z@\else
+              \draw
+                (current page.north west) ++(\foldmarkdim{}{hpos},-\foldmarkdim{\mark}{vpos})
+                -- +(\foldmarkdim{\mark}{length},0);
+            \fi
+          }{}
+        }
+        \foreach \mark in {l} {
+          \foldmarkifenabled{\mark}{
+            \ifdim \foldmarkdim{\mark}{hpos}=\z@\else
+              \draw
+                (current page.north west) ++(\foldmarkdim{\mark}{hpos},-\foldmarkdim{}{vpos})
+                 -- +(0,-\foldmarkdim{\mark}{length});
+             \fi
+           }{}
+         }
+      \end{tikzpicture}
+    \endgroup
+  }
+\makeatother
+
+
+
+%------------------------------------------------------------------------------
+\pagestyle{plain}
+
+\begin{document}
+
+%------------------------------------------------------------------------------
+%	TO ADDRESS
+%------------------------------------------------------------------------------
+
+\begin{letter}{\recipientdetails}
+\foldmarkenable{p}
+\drawfoldmarks
+%------------------------------------------------------------------------------
+%	LETTER CONTENT
+%------------------------------------------------------------------------------
+
+\opening{$opening_greeting$}
+\setstretch{1.25}
+
+$body$
+
+\closing{$closing_greeting$}
+
+\vspace*{.5in}	
+$if(encl)$
+\encl{$for(encl)$$encl$$sep$\\$endfor$}
+$endif$
+$if(cc)$
+\cc{$for(cc)$$cc$$sep$\\$endfor$}
+$endif$
+$if(ps)$
+\ps{$ps$}
+$endif$
+
+%------------------------------------------------------------------------------
+
+\end{letter}
+\end{document}

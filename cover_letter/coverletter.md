@@ -14,8 +14,6 @@ sig:
  name: 'Dr. Yannis Galanakis'
  post: Postdoctoral Research Associate
  secondpost: University of Kent
-mainfont: Spectral
-sansfont: Open Sans
 
 date: "`r format(Sys.time(), '%d %B %Y')`"
 to_professional_title: "Dr."
