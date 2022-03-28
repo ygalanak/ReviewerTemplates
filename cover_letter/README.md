@@ -12,4 +12,4 @@ This tool is pretty light on dependencies. All you need is to have Pandoc runnin
 # Feedback
 Feel free to communicate your feedback [here](mailto:galanakis.gian@gmail.com).
 
-[Yannis Galanakis](https://www.yannisgalanakis.com); <galanakis.gian@gmail.com>
+**Author:** [Yannis Galanakis](https://www.yannisgalanakis.com); <galanakis.gian@gmail.com>
