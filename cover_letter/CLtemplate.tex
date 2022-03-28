@@ -1,13 +1,3 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Academic Letter LaTeX and RMarkdown Structure                       %
-% Author: Pedro Henrique Pereira Braga     
-% Modified by: Yannis Galanakis
-%                                                                     %
-% License:                                                            %
-% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/) %
-%                                                                     %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 % Set the font size (11pt, for now) and paper size (e.g. letterpaper, a4paper)
 \documentclass[11pt, letterpaper]{letter} 
 
@@ -83,12 +73,14 @@ $endif$
 
 \geometry{
     headheight = 0.1in, % Header height
-	top=1in, % Top margin
+	top=.5in, % Top margin
 	bottom=1.5cm, % Bottom margin
 	left=3cm, % Left margin
 	right=3cm, % Right margin
 	% showframe, % Uncomment to show how the type block is set on the page
 }
+
+
 
 %-----------------------------------------------------------------------------
 %	AUTHOR AND RECIPIENTS NEW COMMANDS AND DETAILS STRUCTURE
@@ -100,13 +92,16 @@ $endif$
 %-----------------------------------------------------------------------------
 %	HEADER STRUCTURE
 %-----------------------------------------------------------------------------
-
+\usepackage{fontawesome5}
 \address{
  % Include the author's details on the right side of the page under the line
 	\raggedleft{
 		\footnotesize{ % Use a smaller font size
 		$author$\\ % Author name
 		\authordetails\\
+		\vspace*{.1in}
+		\faIcon[regular]{envelope} $from_email$\\ % Sender's email address
+    \faIcon{globe} $from_personal_website$ \\ % Sender's URL
        \hspace{1mm}
        }
 	}
@@ -197,61 +192,6 @@ $endif$}
 \bodyfont{\textbf{\underline{Subject: $subject$}}}
 $endif$
 }
-
-%------------------------------------------------------------------------------
-%	HEADER CONTENTS
-%------------------------------------------------------------------------------
-
-% \fancypagestyle{firstpage}{
-%     \fancyhf{}
-%         \fancyhead[L]{
-%          %   \includegraphics[height=0.6in, keepaspectratio=true]{$from_institution_logo$}
-%             }
-%         \fancyhead[R]{$author$\\
-%             \footnotesize{
-%               $from_email$\\ % Sender's email address
-%               $from_personal_website$ \\ % Sender's URL
-%               $from_phone$ % Sender's phone number
-%               }
-%             }
-%         }
-% 
-% \fancypagestyle{plain}{
-%     \fancyhf{}
-%         \fancyhead[L]{
-%       %      \includegraphics[height=0.6in, keepaspectratio=true]{$from_institution_logo$}
-%             }
-%         \fancyhead[R]{$author$\\
-%             \footnotesize{
-%               $from_email$\\ % Sender's email address
-%               $from_personal_website$ \\ % Sender's URL
-%               $from_phone$ % Sender's phone number
-%               }
-%             }
-%         }
-% 
-% \fancypagestyle{empty}{
-%     \fancyhf{}
-%         \fancyhead[L]{
-%             \includegraphics[height=0.6in, keepaspectratio=true]{$from_institution_logo$}
-%             }
-%         \fancyhead[R]{$author$\\
-%             \footnotesize{
-%               $from_email$\\ % Sender's email address
-%               $from_personal_website$ \\ % Sender's URL
-%               $from_phone$ % Sender's phone number
-%               }
-%             }
-%         }
-
-$if(blockquote)$
-\usepackage{mdframed} % color is loaded by mdframed
-\definecolor{greyborder}{RGB}{221,221,221}
-%\definecolor{greytext}{RGB}{119,119,119}
-\newmdenv[rightline=false,bottomline=false,topline=false,linewidth=3pt,linecolor=greyborder,skipabove=\parskip]{blockquote}
-\renewenvironment{quote}{\begin{blockquote}\list{}{\rightmargin=0em\leftmargin=0em}%
-\item\relax\color{\thinfont}\ignorespaces}{\unskip\unskip\endlist\end{blockquote}}
-$endif$
 
 %==============================================================================
 % FOLDING MARKS
@@ -409,6 +349,15 @@ $endif$
   }
 \makeatother
 
+%
+% blockquote
+%
+\definecolor{blockquote-border}{RGB}{221,221,221}
+\definecolor{blockquote-text}{RGB}{119,119,119}
+\usepackage{mdframed}
+\newmdenv[rightline=false,bottomline=false,topline=false,linewidth=3pt,linecolor=blockquote-border,skipabove=\parskip]{customblockquote}
+\renewenvironment{quote}{\begin{customblockquote}\list{}{\rightmargin=0em\leftmargin=0em}%
+\item\relax\thinfont\ignorespaces}{\unskip\unskip\endlist\end{customblockquote}}
 
 
 %------------------------------------------------------------------------------

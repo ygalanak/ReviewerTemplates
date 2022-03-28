@@ -14,12 +14,12 @@ from_professional_title: "Ph.D."
 from_institution: "University of Kent"
 from_department: "School of Economics"
 from_address: "Kennedy Building, Park Wood Road"
-from_city: "Canterbury, Kent"
-from_state_province: "QC"
+from_city: "Canterbury"
+from_state_province: "Kent"
 from_postalcode: "CT2 7FS"
 from_country: "UK"
 
-to_professional_title: "Dr."
+to_professional_title: "Professor"
 to_name: "Hermione Granger"
 to_department: "Department of Magical Law Enforcement"
 to_institution: "Ministry of Magic Headquarters"
@@ -29,7 +29,7 @@ to_state_province: "London"
 to_postal_code: "SW1A 2EU"
 to_country: "United Kingdom"
 
-opening_greeting: "Dear Editor Dr. Granger,"
+opening_greeting: "Dear Editor,"
 closing_greeting: "Sincerely,"
 
 encl:
@@ -38,11 +38,10 @@ cc:
   - Associate Editor Dr. Potter
 ---
   
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac ipsum vel lacus eleifend ultrices. Donec metus lectus, pulvinar faucibus pretium id, sollicitudin vel purus. Nulla et metus eu quam tincidunt interdum. Phasellus mi urna, pellentesque et auctor nec, pharetra ultrices ex. Curabitur pretium velit porttitor risus efficitur condimentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras et semper elit. Ut interdum semper venenatis. 
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac ipsum vel lacus eleifend ultrices. Donec metus lectus, pulvinar faucibus pretium id, sollicitudin vel purus. Nulla et metus eu quam tincidunt interdum. Phasellus mi urna, pellentesque et auctor nec, pharetra ultrices ex.
 
 > Donec mi felis, placerat vitae metus eu, lobortis suscipit quam. 
 > Vivamus finibus aliquam tempus. Nulla interdum interdum risus ut rhoncus. 
 
-Nulla interdum ligula ac ligula porta convallis. Duis rutrum ante quis dolor dignissim maximus. Phasellus at vulputate tortor, vitae laoreet felis. Pellentesque sed orci vulputate, vestibulum magna et, tincidunt justo. Sed elementum libero quis sapien vestibulum, sit amet consectetur est porttitor. Etiam in turpis in erat vehicula sollicitudin id eget libero. Suspendisse potenti. Phasellus in felis nibh. Proin laoreet laoreet arcu accumsan finibus.
-
+Nulla interdum ligula ac ligula porta convallis. Duis rutrum ante quis dolor dignissim maximus. Phasellus at vulputate tortor, vitae laoreet felis. Pellentesque sed orci vulputate, vestibulum magna et, tincidunt justo. Sed elementum libero quis sapien vestibulum, sit amet consectetur est porttitor. Etiam in turpis in erat vehicula sollicitudin id eget libero. 
 

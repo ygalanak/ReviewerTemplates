@@ -1,17 +1,15 @@
-# PandocAcademicCoverLetter
-Easily write letters in your academic or other professional life.
+# Cover letter
+Easily write letters to the Editor, to respond to a referee or apply for a job/grant.
 
 # Usage
-Create your letter by following the template provided by the example letter `coverletter.md`. You can change your signature and institute logo by changing the `Signature.pdf` and `Michigan.pdf` files, respectively. Once you have your markdown letter the way you like it, go ahead and run the shell script as:
+Create your letter by following the template provided by the example letter `coverletter.Rmd`. You can change your signature by changing the `signature.pdf` files. Once you have your markdown letter the way you like it, go ahead and "Knit" it.
 
-```bash
-bash ./renderletter
-```
-
-See the final (example) product [here](https://github.com/Microbiology/PandocAcademicCoverLetter/blob/master/coverletter.pdf).
+See the final (example) product [here]().
 
 # Dependencies
 This tool is pretty light on dependencies. All you need is to have Pandoc running on your computer. Don't yet have Pandoc? Follow the installation instructions [here](https://pandoc.org/installing.html).
 
-# Contributing
-Want to help fix a bug or add a feature? Feel free to submit a pull request. I also really value feedback from any users, so if you have an idea or a problem, please create an issue so that I can address it.
+# Feedback
+Feel free to communicate your feedback [here](mailto:galanakis.gian@gmail.com).
+
+[Yannis Galanakis](https://www.yannisgalanakis.com); <galanakis.gian@gmail.com>
