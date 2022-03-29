@@ -1,0 +1,170 @@
+% Set the font size (11pt, for now) and paper size (e.g. letterpaper, a4paper)
+\documentclass[11pt, a4paper]{article} 
+
+%----------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------
+
+\usepackage{graphicx} % Required for including pictures
+% ----------
+% GRAPHICS
+% ----------
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+
+\usepackage{fancyhdr} % Allows the use of fancy headers and footers
+\usepackage{tikz}
+
+\usepackage{microtype} % For typography improvement
+% For landscape PDF pages
+\usepackage{pdflscape}
+
+\usepackage{url} % Allows the use of hyperlinks
+\urlstyle{same} % Allows hyperlink fonts to be the same as the mainfont
+\usepackage[hidelinks]{hyperref} % Allows the use of hyperlinks and 
+% removes the blue boxes around the link
+$if(colorlinks)$
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+$endif$
+
+\pagestyle{empty} % Removes headers and footers
+\usepackage{longtable}
+\usepackage{setspace} % Allows the use of double spacing in the letter body
+\usepackage{natbib}
+%\setlength\parindent{1cm} % Paragraph indentation
+%--------------------------------------------------------------------------
+%	FONTS
+%--------------------------------------------------------------------------
+% -------
+% FONTS
+% -------
+% mathtools has \underbracket and \overbracket with options for controlling 
+% height and thickness, but unicode-math provides its own option-free versions 
+% of these bracket macros. At one point it used to patch these macros and not 
+% override mathtools' commands, but it currently does not do that anymore 
+% (see https://github.com/wspr/unicode-math/issues/544). 
+%
+% We use unicode-math here so that we can use custom math fonts with 
+% \setmathfont{}, which then messes up bracket options. But there's a solution! 
+% We save mathtools' brackets  after loading mathtools, then load 
+% unicode-math which clobbers them, and then *after* \begin{document}, redifine 
+% the stored brackets (this part is key! According to 
+% https://tug.org/pipermail/lualatex-dev/2011-August/001295.html, the unicode 
+% table from unicode-math is executed after beginning the document, so 
+% redefining the brackets in the preamble won't work)
+
+% Math stuff
+\usepackage{amsmath, amssymb, amsfonts, amsthm, mathtools}
+
+% Save mathtools' brackets and braces
+\let\normalunderbracket=\underbracket
+\let\normaloverbracket=\overbracket
+
+\usepackage{unicode-math}  % For custom math fonts
+
+% Custom fonts
+\usepackage{fontspec}
+\usepackage{xunicode}
+\defaultfontfeatures{Mapping=tex-text,Ligatures=TeX,Scale=MatchLowercase}
+$if(mainfont)$
+\setmainfont[Numbers={Proportional,OldStyle}]{$mainfont$}
+$else$
+\setmainfont[Numbers={Proportional,OldStyle}]{Linux Libertine O}
+$endif$
+$if(sansfont)$
+\setsansfont{$sansfont$}
+$else$
+\setsansfont{Source Sans Pro}
+$endif$
+$if(monofont)$
+\setmonofont[Mapping=tex-ansi, Scale=MatchLowercase]{$monofont$}
+$else$
+\setmonofont[Mapping=tex-ansi, Scale=MatchLowercase]{Inconsolata}
+$endif$
+$if(mathfont)$
+\setmathfont{$mathfont$}
+$else$
+\setmathfont{Libertinus Math}
+$endif$
+%----------------------------------------------------------------------------
+%	DOCUMENT MARGINS
+%----------------------------------------------------------------------------
+
+% \usepackage{geometry} % Required for adjusting page dimensions
+% 
+% \geometry{
+%     headheight = 0.1in, % Header height
+% 	top=.5in, % Top margin
+% 	bottom=1.5cm, % Bottom margin
+% 	left=3cm, % Left margin
+% 	right=3cm, % Right margin
+% 	% showframe, % Uncomment to show how the type block is set on the page
+% }
+
+
+
+%-----------------------------------------------------------------------------
+%	AUTHOR AND RECIPIENTS NEW COMMANDS AND DETAILS STRUCTURE
+%-----------------------------------------------------------------------------
+
+\newcommand{\authordetails}[1]{\renewcommand{\authordetails}{#1}}
+\newcommand{\recipientdetails}[1]{\renewcommand{\recipientdetails}{#1}}
+
+%-----------------------------------------------------------------------------
+%	HEADER STRUCTURE
+%-----------------------------------------------------------------------------
+\usepackage{fontawesome5}
+
+
+
+%
+% blockquote
+%
+\definecolor{blockquote-border}{RGB}{221,221,221}
+\definecolor{blockquote-text}{RGB}{119,119,119}
+\usepackage{mdframed}
+\newmdenv[rightline=false,bottomline=false,topline=false,linewidth=3pt,linecolor=blockquote-border,skipabove=\parskip]{customblockquote}
+\renewenvironment{quote}{\begin{customblockquote}\list{}{\rightmargin=0em\leftmargin=0em}%
+\item\relax\color{blockquote-text}\ignorespaces}{\unskip\unskip\endlist\end{customblockquote}}
+
+
+% Don't typeset URLs in a monospaced font
+% This has to come after apacite because apacite sets its own URL style
+\urlstyle{same}
+
+
+
+%------------------------------------------------------------------------------
+\pagestyle{plain}
+
+\begin{document}
+\setstretch{1.25}
+
+\title{$title$ \\
+\textbf{$subtitle$} \\
+$if(manuscript-number)$
+{\footnotesize {[}Journal Manuscript No. $manuscript-number${]}}\\
+$endif$}
+\date{}
+\author{}
+
+\maketitle
+
+
+$body$
+
+
+%%% BibTeX style.
+\bibliographystyle{econ}
+
+%% BibTeX database file.
+\addcontentsline{toc}{section}{References}
+\bibliography{$bibliography$}
+
+\end{document}

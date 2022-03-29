@@ -1,0 +1,134 @@
+---
+output: 
+  pdf_document:
+    latex_engine: xelatex
+    template: reportTemplate.tex
+    dev: cairo_pdf
+    number_sections: false # no numbering for the report
+    citation_package: natbib
+title: "Report on"
+subtitle: "Fancy article title"
+manuscript-number: "MS-8901DID1"
+reference-section-title: References
+bibliography: references.bib
+mainfont: Spectral
+sansfont: Source Sans Pro
+---
+
+<!-- rmd-paper.md is generated from rmd-paper.Rmd. Only edit the .Rmd file, *not* the .md file. -->
+
+```{r setup, include=FALSE}
+library(knitr)
+knitr::opts_chunk$set(
+                      fig.path='figs-tbls',
+                      cache.path='cache/',
+                      dev=c("ragg_png","cairo_pdf"),
+                      cache=TRUE,
+                      par=TRUE,
+                      echo=FALSE,
+                      warning = FALSE,
+                      results="asis",
+                      message=FALSE)
+knit_hooks$set(par = function(before, options, envir){
+    if (before && options$fig.show != 'none') par(mar = c(4,4,.1,.1), cex.lab = .95, cex.axis = .9, mgp = c(2, .7, 0), tcl = -.3)
+}, crop=hook_pdfcrop)
+opts_knit$set(kfigr.prefix=TRUE,
+              kfigr.link=FALSE)
+
+```
+
+```{r libraries}
+library(tidyverse)
+library(gt)
+library(here)
+library(janitor)
+library(socviz)
+library(ggrepel)
+library(showtext)
+library(tibble)
+library(magrittr)
+library(pander)
+library(gridExtra)
+library(grid)
+```
+
+# Introduction
+
+**A couple of paragraphs summarizing the paper and what I took away from it, what its contribution is, and my overall assessment**
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua [@HeissKelley:2017]. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat [@KeckSikkink:1998]. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur [@Heiss:2019].
+
+```{r build-save-plot, echo=FALSE, warning=FALSE}
+# Technically, knitr can put graphic output directly in a document---that's like
+# the number one thing knitr is famous for! For my workflow, though, I like
+# creating all my images in other files, like an anlysis notebook, and then
+# saving those figures with ggsave, since I can use Cairo to (1) embed fonts in
+# PDFs and (2) use correct DPI in PNGs.
+#
+# Also (and more impotantly) with knitr it's impossible to add the cross
+# reference metadata like {#fig:mpg-plot} that's necessary for pandoc-crossref.
+#
+# So instead, I make figures elsewhere (or even in the same document!), save
+# them to disk using ggsave(), and then use standard Markdown syntax +
+# pandoc-crossref metadata to include the images in my document.
+set.seed(1234)
+
+library(ggplot2)
+library(gridExtra)
+
+plot1 <- ggplot(mpg, aes(x = cty, y = hwy, color = as.factor(cyl))) +
+  geom_point(size = 0.5, position = position_jitter()) +
+  labs(x = "City MPG", y = "Highway MPG", color = "Cylinders") +
+  theme_minimal(9)+
+  theme(axis.title.x = element_text(size = 8),
+        axis.title.y = element_text(size = 8, face = "plain"),
+        legend.title = element_text(size=8))
+
+plot1 <-arrangeGrob(plot1, nrow=1,
+             bottom = ggpubr::text_grob("Note: this plot really shows the same information, and is really very very very very long. \nSource: Authors' elaboration based on data",
+                           x = 0,
+                           y = 0.5,
+                           just = "left", 
+                           size = 7, #font size
+                           family = "sans"
+                           ))
+
+ggsave(here::here("figs-tbls", "mpg-plot.pdf"), plot = plot1,
+       width = 5, height = 3, units = "in", device = cairo_pdf)
+ggsave(here::here("figs-tbls", "mpg-plot.png"), plot = plot1,
+       width = 5, height = 3, units = "in", type = "cairo", dpi = 300)
+```
+
+![Scatterplot showing the relationship between city and highway miles per gallon](../figs-tbls/mpg-plot.pdf){#fig:mpg-plot}
+
+# Main Comments
+
+**Dive in here on the points the paper needs to address to be publishable**
+
+1. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam (see figure \ref{fig:mpg-plot})
+
+2. eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
+  $$ 
+  \text{This is a test} = \beta_1 x_1 + \varepsilon 
+  $$
+
+3. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. 
+
+# Other comments
+
+**List other comments on here, like papers that should have been cited, typos found, ways the paper could be more readable**
+
+1. A fancy quote from the paper is not quite well-written. 
+  > Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. 
+
+2. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? 
+
+
+
+\newpage
+
+```{r sessioninfo, eval = FALSE}
+# set eval = FALSE if you don't want this info (useful for reproducibility) to appear 
+sessionInfo()
+# sessioninfo::session_info()
+```
