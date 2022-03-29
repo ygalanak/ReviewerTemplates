@@ -4,7 +4,7 @@
 
 **Author:** [Yannis Galanakis](https://www.yannisgalanakis.com); <galanakis.gian@gmail.com>
 
-This template helps to act a reviewer in a peer-reviewed journal. You can create in `R` Markdown the cover letter to the Editor and the reviewer report. The templates are based on [Yannis Galanakis' Data Analysis Template](https://github.com/ygalanak/DataAnalysisTemplate). From these templates, you may export your `.Rmd` file into `.tex`, hence `.pdf`, or `.docx`. An `.html` option would be available but not used for peer-reviewing activities.
+This template helps to act a reviewer in a peer-reviewed journal. You can create in `R` Markdown the cover letter to the Editor and the reviewer report. The templates are based on [Yannis Galanakis' Data Analysis Template](https://github.com/ygalanak/DataAnalysisTemplate). From these templates, you may export your `.Rmd` file into `.tex`, hence `.pdf`. An `.html` option would be available but not used for peer-reviewing activities.
 
 # Cover letter
 It uses its own template and generates a letter. The letter can be used further to apply for a grant or any other purpose.
